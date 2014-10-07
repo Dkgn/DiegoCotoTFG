@@ -1,0 +1,17 @@
+# Para obtener los grafos de Klingman et al con el programa NETGEN en estado bruto, haga lo siguiente
+# ==============================
+# EN LINUX:
+# ==============================
+# Abra una terminal y vaya al directorio donde se encuentren los archivos "netgen" y "create_graphs.sh" usando el comando cd
+# Desenvuelva los archivos de netgen con la orden:
+# sh netgen
+# Compile el programa netgen.f con la orden:
+# f77 -o netgen.exe netgen.f
+# Ejecute el script create_graphs.sh con la orden:
+# ./create_graphs.sh
+# Los grafos deseados apareceran como archivos de texto en el directorio input_graphs, que se creara dentro del directorio donde se ejecutaron las ordenes anteriores
+# ==============================
+# EN WINDOWS
+# ==============================
+# El proceso esta pensado para llevarse a cabo en Linux. Si no tiene Linux, utilice cygwin (http://cygwin.com/install.html).
+# Una vez instalado tendrá una terminal que funciona como la de Linux. Lleve a cabo en ella las instrucciones explicadas para Linux.

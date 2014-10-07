@@ -1,0 +1,45 @@
+\section{Comparación de algoritmos}
+
+
+\subsection{Metodología}
+¿Grafos generados aleatoriamente? ¿NETGEN? ¿En qué nos vamos a fijar?
+
+Como ya dije en la sección \ref{subsec:1.3}, el tiempo de ejecución está afectado por el lenguaje usado y decisiones como las estructuras de datos usadas.\\
+
+En cuanto al lenguaje, todos los algoritmos y análisis de este trabajo están hechos en octave.
+La elección del lenguaje no fue por ninguna ventaja particular de este.
+La elección suele basarse en los programas y estructuras ya existentes, pero como yo voy a crear todo lo que necesite esto no es un factor.
+Hay cosas en las que es peor, como el uso de recursión y listas vinculadas, que evitaré usar cuando sea posible, pero en cualquier caso no es suficiente como para afectar a las conclusiones del trabajo, y por otro lado me permite mostrar los conocimientos adquiridos en este lenguaje a lo largo de la carrera.\\
+
+En cuanto a estructuras de datos, las redes las almacenaré mediante representaciones en estrella hacia delante y hacia atrás.
+Esta representación requiere muy poca memoria y realiza todas las operaciones básicas que vamos a usar en grafos en $O(1)$, pero crearla inicialmente es más costoso.
+Añadir un nuevo nodo o arco tiene complejidad $O(m)$, pero como esas acciones solo se van a realizar antes de empezar a resolver el problema, esto no va a afectar en absoluto al estudio.\\
+
+En la representación en estrella hacia delante, ordenamos los ejes según el nodo del que emanen (todos los que salen del nodo 1 primero, todos los que salen del nodo 2 después, etc), y les asignamos el número de su orden.
+Para cada eje tenemos cuatro vectores: $inicial$, $final$, $coste$ y $capacidad$, que guardan los extremos y los atributos de cada arco.
+Así, el eje que ocupa la posición 137 tendrá por nodo inicial $inicial(137)$, por nodo final $final(137)$, por coste $coste(137)$ y por capacidad $capacidad(137)$.
+Tendremos además un vector $pointer$ que señala para cada nodo $i$ el lugar que ocupa el primer eje que sale de $i$.
+Así, si $pointer(7)=34$ y $pointer(8)=41$, los ejes que salen del nodo $7$ ocupan las posiciones $34$ a $40$.
+Por consistencia, si ningún eje sale del nodo $i$, $pointer(i)=pointer(i+1)$.
+Además, si el grafo tiene $n$ nodos y $m$ ejes, $pointer(n+1)=m+1$.\\
+
+La representación en estrella hacia delante nos permite acceder a mucha información muy rápido, pero con ella es difícil encontrar los ejes que llegan a un determinado nodo.
+Para facilitar esto se le añade la representación en estrella hacia atrás.
+Lo que hacemos es ordenar los ejes según los nodos a los que llegan y crear un vector $rpointer$ que señale para cada nodo $i$ la posición según ese orden del primer eje que llega a $i$.
+El resto es igual que para la representación en estrella hacia delante.
+Para no tener que volver a crear todos los vectores, en su lugar uso un vector $trace$ que señala según el orden de la representación hacia atrás la posición que ocupa cada arco en la representación hacia delante.\\
+
+Para terminar, utilizamos un vector $inverso$ que señala para cada eje la posición que ocupa el eje inverso.
+De este modo, si $e_1=\{i,j\}$ ocupa la posición $4$ en la representación hacia delante y $e_2=\{j,i\}$ ocupa la posición $19$, entonces $inverso(4)=19$ y $inverso(19)=4$.\\
+
+Los grafos que utilizo en este trabajo han sido transformados en grafos equivalentes con los que es más fácil trabajar.
+En particular, cuando un grafo tiene varios orígenes o salidas, lo transformo en un grafo con un solo origen y una sola salida como vimos en la sección \ref{subsec:1.1}.
+Además, si un grafo contiene un eje $e_1=\{i,j\}$ pero no el eje $e_2=\{j,i\}$, introduzco este último con capacidad cero y coste $c_{e_2} = - c_{e_1}$.
+Esto no cambia el grafo (un eje de capacidad cero es como si no existiese en términos de flujo) y me simplifica las operaciones de los algoritmos que voy a aplicar.
+
+\subsection{Estudio comparativo}
+Todos los datos significativos y gráficas obtenidas. Análisis básico.
+
+
+\subsection{Conclusiones}
+¿Cuál es el mejor algoritmo? ¿Será el mejor en la práctica?
